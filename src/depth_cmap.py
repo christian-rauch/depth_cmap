@@ -33,8 +33,9 @@ class DepthCmap:
 
     def main(self):
         rospy.init_node("depth_cmap", anonymous=True)
-        self.pub = rospy.Publisher("depth_cmap", Image, queue_size=1)
-        rospy.Subscriber("image_depth", Image, self.img_cb)
+        resolved_topic_name = rospy.resolve_name("image_depth")
+        self.pub = rospy.Publisher(resolved_topic_name+"/colour_map", Image, queue_size=1)
+        rospy.Subscriber(resolved_topic_name, Image, self.img_cb)
         rospy.spin()
 
 
